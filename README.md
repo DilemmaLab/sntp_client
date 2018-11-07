@@ -1,2 +1,2 @@
-# sntp_client
+# SNTP Client
 Implementation of SNTP-client
