@@ -71,7 +71,7 @@
   }
   val= buf[0];
   val= ( ( (val) >> 27)&7 );
-  printf("Version: %d\ n",(int)val);
+  printf("Version: %d\n",(int)val);
   val= buf[0];
   val=( ( val >> 24)& 7 );
   printf("Mode ");
