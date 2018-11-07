@@ -30,16 +30,16 @@
   	server_addr.sin_addr.s_addr = inet_addr(hostname);
   	server_addr.sin_port=htons(portno);
   	tclock1 =clock(); //Время на компьютере до отправки сообщения 
-	printf("Clock before sending request = %d\ n",tclock1); 
+	printf("Clock before sending request = %d\n",tclock1); 
 	//  Отправка данных 
 	i=sendto(s,msg,sizeof(msg),0,(struct sockaddr  *)&server_addr,sizeof(server_addr));
   	tclock2=clock(); //Время на компьютере после отправки сообщения 
-	printf("Clock after sending request = %d\ n",tclock2);
-  	printf("Program spent %d ms on request (RTT)\ n",tclock2- tclock1);
+	printf("Clock after sending request = %d\n",tclock2);
+  	printf("Program spent %d ms on request (RTT)\n",tclock2- tclock1);
   	//  получение ответных данных 
 	i=recv( s,buf,   sizeof( buf),0);
-  	printf("Socket descriptor %d\ n",s);
-  	printf("recvfr: %d\ n",i);
+  	printf("Socket descriptor %d\n",s);
+  	printf("recvfr: %d\n",i);
   	perror ("recvfr");
   	//  Интерпретируем полученное сообщение 
 	//  Мы получили 12 строк в буфере приема ,  которые соответствуют формату  SNTP- сообщения без ключа идентификации и дайджест сообщения 
@@ -60,13 +60,13 @@
   	// Первая строка буфера приема  - интерпретация при помощи побитовых  операций 
 	int val;
   	val=( ( buf[0] ) >> 30);
-  	switch(val)  {  case 0: printf("No Warning LI=%d\ n", val);
+  	switch(val)  {  case 0: printf("No Warning LI=%d\n", val);
  	break;
-  	case 1: printf("Last Minute is 61 sec LI=%d\ n", val);
+  	case 1: printf("Last Minute is 61 sec LI=%d\n", val);
  		break;
-  	case 2: printf("Last Minute is 59 sec LI=%d\ n", val);
+  	case 2: printf("Last Minute is 59 sec LI=%d\n", val);
  		break;
-  	default: printf("Leap Indicator Alarm -  time is not synchronised!  LI=%d\ n", val);
+  	default: printf("Leap Indicator Alarm -  time is not synchronised!  LI=%d\n", val);
  		break;
   }
   val= buf[0];
@@ -75,38 +75,38 @@
   val= buf[0];
   val=( ( val >> 24)& 7 );
   printf("Mode ");
-  switch(val)  {  case 0: printf("Reserved = %d\ n", val);
+  switch(val)  {  case 0: printf("Reserved = %d\n", val);
                         break;
-                  case 1: printf("Simmetric Active = %d\ n", val);
+                  case 1: printf("Simmetric Active = %d\n", val);
                         break;
-                  case 2: printf("Simmetric Passive = %d\ n", val);
+                  case 2: printf("Simmetric Passive = %d\n", val);
                         break;
-                  case 3: printf("Client = %d\ n", val);
+                  case 3: printf("Client = %d\n", val);
                         break;
-                  case 4: printf("Server = %d\ n", val);
+                  case 4: printf("Server = %d\n", val);
                         break;
-                  case 5: printf("(Wide) BroadCast = %d\ n", val);
+                  case 5: printf("(Wide) BroadCast = %d\n", val);
                         break;
-                  case 6: printf("Reserved for NTP Messeges = %d\ n", val);
+                  case 6: printf("Reserved for NTP Messeges = %d\n", val);
                         break;
-                  case 7: printf("Reserved for Private Use = %d\ n", val);
+                  case 7: printf("Reserved for Private Use = %d\n", val);
                         break;
-                  default: printf("Unknown Mode Mode = %d\ n", val);
+                  default: printf("Unknown Mode Mode = %d\n", val);
                         break;
   }
   val= buf[0];
   val = ( ( val >> 16 ) & 255);
   printf ("Stratum = %d -  ", val);
-  if(val == 0) printf ("Stratum Death Kiss.Unspecified Server\ n");
-  else if(val == 1) printf("Stratum.Primary Reference\ n");
-  else if(val <= 15) printf("Stratum.Secondary Reference\ n");
-  else if(val <= 255) printf("Stratum.Reserved\ n");
-  else printf ("Stratum Unknown\ n");
+  if(val == 0) printf ("Stratum Death Kiss.Unspecified Server\n");
+  else if(val == 1) printf("Stratum.Primary Reference\n");
+  else if(val <= 15) printf("Stratum.Secondary Reference\n");
+  else if(val <= 255) printf("Stratum.Reserved\n");
+  else printf ("Stratum Unknown\n");
   float prec = ( ( buf[0] ) & 255);
-  printf ("Precision = %f ms\ n", prec);
+  printf ("Precision = %f ms\n", prec);
   float delay;
   delay=ntohl((float)buf[1]);
-  printf("Delay = %f ms\ n",delay);
+  printf("Delay = %f ms\n",delay);
   /*  Конвертация времени  NTP- сервера в стандартное время  Unix/ Linux- системы  - для этого необходимо 
   вычесть из полученного времени число  секунд между  0000  UT   1  Января 1900  ( точка отсчета времени  NTP- сервера ) 
   и  0000  UT   1  Января  1970  ( точка отсчета времени  Unix/ Linux- системы ) и  применить функцию  ctime(..)  */  
@@ -114,5 +114,5 @@
   printf("Server Time: %s",(char*)ctime(&tmit));
   i=time(0);
   printf("System Time: %s",(char*)ctime(&i));
-  printf("System time is %d seconds off\ n",i- tmit);
+  printf("System time is %d seconds off\n",i- tmit);
   }
